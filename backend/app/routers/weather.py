@@ -1,5 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.responses import FileResponse
+
+from app.services.export_service import export_csv
+
 
 from app.services.weather_service import (
     fetch_weather,
@@ -129,3 +133,16 @@ def delete_weather_record(
     }
 
 
+
+@router.get("/export/csv")
+def download_csv(
+    db: Session = Depends(get_db),
+):
+
+    filename = export_csv(db)
+
+    return FileResponse(
+        path=filename,
+        filename=filename,
+        media_type="text/csv",
+    )

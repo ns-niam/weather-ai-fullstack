@@ -4,7 +4,7 @@ import { Search, MapPin } from "lucide-react";
 
 type SearchBarProps = {
   city: string;
-  setCity: (value: string) => void;
+  setCity: React.Dispatch<React.SetStateAction<string>>;
   onSearch: () => void;
 };
 
@@ -14,35 +14,42 @@ export default function SearchBar({
   onSearch,
 }: SearchBarProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-8">
+    <div className="flex flex-col gap-4 md:flex-row">
 
       <div className="relative flex-1">
 
         <MapPin
-          className="absolute left-4 top-4 text-gray-400"
           size={22}
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
         />
 
         <input
+          type="text"
           value={city}
+          placeholder="Enter city name..."
           onChange={(e) => setCity(e.target.value)}
-          placeholder="Enter city..."
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onSearch();
+            }
+          }}
           className="
-          w-full
-          rounded-xl
-          border
-          border-gray-300
-          bg-white
-          py-4
-          pl-12
-          pr-4
-          text-lg
-          text-gray-900
-          placeholder:text-gray-400
-          shadow-sm
-          outline-none
-          focus:ring-2
-          focus:ring-blue-500
+            w-full
+            rounded-xl
+            border
+            border-gray-300
+            bg-white
+            py-4
+            pl-12
+            pr-4
+            text-lg
+            text-gray-900
+            shadow-sm
+            outline-none
+            transition
+            focus:border-blue-500
+            focus:ring-2
+            focus:ring-blue-500
           "
         />
 
@@ -51,21 +58,19 @@ export default function SearchBar({
       <button
         onClick={onSearch}
         className="
-        flex
-        items-center
-        justify-center
-        gap-2
-        rounded-xl
-        bg-blue-600
-        px-7
-        py-3
-        text-lg
-        font-semibold
-        text-white
-        shadow-md
-        transition
-        hover:bg-blue-700
-        hover:scale-105
+          flex
+          items-center
+          justify-center
+          gap-2
+          rounded-xl
+          bg-blue-600
+          px-8
+          py-4
+          text-lg
+          font-semibold
+          text-white
+          transition
+          hover:bg-blue-700
         "
       >
         <Search size={20} />

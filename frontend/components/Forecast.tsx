@@ -1,4 +1,10 @@
-export default function Forecast() {
+type ForecastProps = {
+  city: string;
+};
+
+export default function Forecast({ city }: ForecastProps) {
+
+
   return (
     <div className="mt-8">
 

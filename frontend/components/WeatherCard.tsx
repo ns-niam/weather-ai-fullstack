@@ -3,53 +3,51 @@ import {
   Thermometer,
   Droplets,
   Wind,
-  CloudSun,
+  Calendar,
 } from "lucide-react";
 
-export default function WeatherCard() {
-  return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 mt-8">
+import { Weather } from "@/types/weather";
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+type Props = {
+  weather: Weather;
+};
+
+export default function WeatherCard({ weather }: Props) {
+  return (
+    <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-8 shadow-lg">
+
+      <div className="grid gap-8 md:grid-cols-3">
 
         {/* Left */}
 
         <div>
 
           <h2 className="text-4xl font-bold text-gray-900">
-            Dhaka
+            {weather.city}
           </h2>
 
-          <div className="flex items-center gap-2 mt-3 text-gray-600">
+          <div className="mt-3 flex items-center gap-2 text-gray-600">
             <MapPin size={18} />
-            Bangladesh
+            {weather.country}
           </div>
 
-          <p className="mt-5 text-gray-500">
-            Tuesday, May 27 • 11:45 AM
-          </p>
-
-          <button className="mt-6 bg-blue-100 text-blue-700 px-4 py-2 rounded-lg font-semibold">
-            Current Weather
-          </button>
+          <div className="mt-5 flex items-center gap-2 text-gray-500">
+            <Calendar size={18} />
+            {new Date(weather.searched_at).toLocaleString()}
+          </div>
 
         </div>
 
         {/* Center */}
 
-        <div className="text-center">
+        <div className="flex flex-col items-center justify-center">
 
-          <CloudSun
-            size={90}
-            className="mx-auto text-yellow-500"
-          />
+          <div className="text-7xl font-extrabold text-blue-600">
+            {Math.round(weather.temperature)}°
+          </div>
 
-          <h1 className="text-7xl font-extrabold text-gray-900 mt-4">
-            32°
-          </h1>
-
-          <p className="text-gray-500 text-xl">
-            Feels like 37°
+          <p className="mt-2 text-lg text-gray-500">
+            Current Temperature
           </p>
 
         </div>
@@ -58,68 +56,47 @@ export default function WeatherCard() {
 
         <div className="space-y-5">
 
-          <div className="flex justify-between">
-
-            <div className="flex gap-3 items-center text-gray-700">
-
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 text-gray-700">
               <Thermometer className="text-blue-500" />
-
               Temperature
-
             </div>
 
-            <span className="font-bold text-xl text-gray-900">
-              32°C
+            <span className="font-bold">
+              {weather.temperature} °C
             </span>
-
           </div>
 
-          <div className="flex justify-between">
-
-            <div className="flex gap-3 items-center text-gray-700">
-
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 text-gray-700">
               <Droplets className="text-blue-500" />
-
               Humidity
-
             </div>
 
-            <span className="font-bold text-xl text-gray-900">
-              68%
+            <span className="font-bold">
+              {weather.humidity} %
             </span>
-
           </div>
 
-          <div className="flex justify-between">
-
-            <div className="flex gap-3 items-center text-gray-700">
-
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3 text-gray-700">
               <Wind className="text-blue-500" />
-
-              Wind
-
+              Wind Speed
             </div>
 
-            <span className="font-bold text-xl text-gray-900">
-              12 km/h
+            <span className="font-bold">
+              {weather.wind_speed} m/s
             </span>
-
           </div>
 
-          <div className="flex justify-between">
-
-            <div className="flex gap-3 items-center text-gray-700">
-
-              <CloudSun className="text-blue-500" />
-
-              Condition
-
-            </div>
-
-            <span className="font-bold text-xl text-gray-900">
-              Partly Cloudy
+          <div className="flex items-center justify-between">
+            <span className="text-gray-700">
+              Weather Code
             </span>
 
+            <span className="rounded-lg bg-blue-100 px-3 py-1 font-semibold text-blue-700">
+              {weather.weather_code}
+            </span>
           </div>
 
         </div>
